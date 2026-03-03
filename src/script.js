@@ -6,7 +6,6 @@ const gamesGrid = document.getElementById('games-grid');
 const categoriesContainer = document.getElementById('categories-container');
 const searchInput = document.getElementById('search-input');
 const noResults = document.getElementById('no-results');
-const heroSection = document.getElementById('hero-section');
 const gameModal = document.getElementById('game-modal');
 const closeModal = document.getElementById('close-modal');
 const gameIframe = document.getElementById('game-iframe');
@@ -16,7 +15,6 @@ const modalCategory = document.getElementById('modal-category');
 const modalFullscreen = document.getElementById('modal-fullscreen');
 const playerCount = document.getElementById('player-count');
 const logo = document.getElementById('logo');
-const playHero = document.getElementById('play-hero');
 
 // Initialize Lucide Icons
 lucide.createIcons();
@@ -55,13 +53,6 @@ function renderGames() {
         const matchesCategory = activeCategory === 'All' || game.category === activeCategory;
         return matchesSearch && matchesCategory;
     });
-
-    // Toggle Hero visibility
-    if (searchQuery || activeCategory !== 'All') {
-        heroSection.classList.add('hidden');
-    } else {
-        heroSection.classList.remove('hidden');
-    }
 
     if (filtered.length === 0) {
         gamesGrid.innerHTML = '';
@@ -144,10 +135,6 @@ logo.addEventListener('click', () => {
     searchInput.value = '';
     renderCategories();
     renderGames();
-});
-
-playHero.addEventListener('click', () => {
-    openGame('slope');
 });
 
 modalFullscreen.addEventListener('click', () => {
