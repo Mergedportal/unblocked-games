@@ -12,6 +12,34 @@
     "category": "Sports",
     "thumbnail": "https://basketrandom.com/upload/imgs/options/basket-random.jpeg",
     "url": "https://jamestore214.github.io/g26/class-436"
+  },
+  {
+    "id": "imposter-party",
+    "title": "Imposter Game",
+    "category": "Party",
+    "thumbnail": "https://play-lh.googleusercontent.com/PGYKDR8O6cdHEXEcinfhqlT8H0n5mYD3ZJVIuuNRlzZ9pteVS-bPBGSfb_e1WY2j4sM",
+    "url": "./games/imposter/index.html"
+  },
+  {
+    "id": "moto-x3m",
+    "title": "Moto X3m",
+    "category": "Racing",
+    "thumbnail": "https://cdn.jsdelivr.net/gh/mathlesson/mathlesson.github.io/motox3m.webp",
+    "url": "https://classroomlesson.github.io/basic-ruffle-player/html/motox3m/index.html"
+  },
+  {
+    "id": "blackjack",
+    "title": "Blackjack",
+    "category": "Card",
+    "thumbnail": "https://cdn.aptoide.com/imgs/c/6/3/c63b20c69b1da55b4963681828df68f2_icon.png",
+    "url": "https://ams.cdn.arkadiumhosted.com/assets/global/game/blackjack-pixijs/"
+  },
+  {
+    "id": "retro-bowl",
+    "title": "Retro Bowl",
+    "category": "Sports",
+    "thumbnail": "https://play-lh.googleusercontent.com/WRM5Y1xZmzcCP1YtO5zl6G2g7CU5c5ZfjX4UVrgi1bpNgkfy-wuB-bQx3kkeRfaGYQ",
+    "url": "https://freegamesunblocked76.github.io/retro-bowl/"
   }
 ]
 

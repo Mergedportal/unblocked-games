@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imposter Party Game</title>
+    <style>
+        :root { --bg: #0f172a; --card: #1e293b; --accent: #38bdf8; --gray: #475569; --danger: #ef4444; --text: #f8fafc; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
+        
+        #game-card { background: var(--card); padding: 2rem; border-radius: 1.5rem; width: 100%; max-width: 420px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); overflow: hidden; }
+        .hidden { display: none !important; }
+        
+        button, select, input { width: 100%; height: 50px; margin: 8px 0; border-radius: 10px; border: none; font-size: 1rem; font-weight: bold; box-sizing: border-box; transition: 0.2s; }
+        
+        button { cursor: pointer; color: #0f172a; background: var(--accent); }
+        .btn-gray { background: var(--gray); color: white; }
+        button:active { transform: scale(0.96); opacity: 0.9; }
+        
+        input, select { background: #0f172a; color: white; border: 1px solid #334155; text-align: center; }
+        
+        .word-display { font-size: 1.8rem; font-weight: 800; margin: 1rem 0; min-height: 4.5rem; display: flex; align-items: center; justify-content: center; border: 2px dashed #334155; border-radius: 12px; color: var(--accent); }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-bounce { animation: bounceIn 0.5s cubic-bezier(0.36, 0, 0.66, -0.56) both; }
+
+        #name-inputs-container { max-height: 180px; overflow-y: auto; margin-bottom: 10px; padding-right: 5px; }
+        .vote-item { background: #334155; padding: 15px; margin: 8px 0; border-radius: 10px; cursor: pointer; color: white; }
+        .result-msg { font-size: 1.2rem; margin-bottom: 15px; min-height: 60px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div id="game-card">
+    <div id="setup">
+        <h1>🕵️ Imposter Game</h1>
+        <label>How many players?</label>
+        <input type="number" id="player-count" value="4" min="3" oninput="syncNameInputs()">
+
+        <button class="btn-gray" onclick="toggleNames()">📝 Edit Names (Optional) ▼</button>
+        <div id="name-section" class="hidden">
+            <div id="name-inputs-container"></div>
+        </div>
+        
+        <label>Select a topic:</label>
+        <select id="topic-select">
+            <option value="Random">🎲 Random (All)</option>
+            <option value="Food">🍕 Food</option>
+            <option value="Places">✈️ Places</option>
+            <option value="Animals">🦁 Animals</option>
+            <option value="Movies">🎬 Movies</option>
+            <option value="Tech">💻 Tech</option>
+            <option value="PopCulture">🎭 Pop Culture</option>
+        </select>
+
+        <button onclick="startGame()">START GAME</button>
+    </div>
+
+    <div id="reveal" class="hidden">
+        <div id="reveal-content">
+            <h2 id="player-title">Player 1</h2>
+            <div id="word-output" class="word-display">•••••</div>
+            <button id="hold-btn">SHOW WORD</button>
+            <button class="btn-gray" onclick="nextTurn()">NEXT PLAYER</button>
+        </div>
+    </div>
+
+    <div id="voting" class="hidden">
+        <h2>Vote!</h2>
+        <div id="result-text" class="result-msg">Tap the person you think is the Imposter.</div>
+        <div id="vote-list"></div>
+        <button onclick="location.reload()">PLAY AGAIN</button>
+    </div>
+</div>
+
+<script>
+    const topics = {
+        Food: [["Pizza"], ["Burger"], ["Sushi"], ["Taco"], ["Steak"], ["Donut"], ["Pasta"], ["Rice"], ["Salad"], ["Soup"], ["Bread"], ["Chicken"], ["Eggs"], ["Potatoes"], ["Cheese"], ["Ramen"], ["Sandwich"], ["Curry"], ["Burrito"], ["Hot Dog"]],
+        Places: [["Paris"], ["Tokyo"], ["London"], ["Mars"], ["Airport"], ["Library"], ["New York"], ["Sydney"], ["Rome"], ["Dubai"], ["Bedroom"], ["Hospital"], ["School"], ["Museum"], ["Park"], ["Restaurant"], ["Beach"], ["Gym"], ["Office"], ["Cinema"]],
+        Animals: [["Dog"], ["Cat"], ["Lion"], ["Tiger"], ["Elephant"], ["Bird"], ["Monkey"], ["Horse"], ["Cow"], ["Pig"], ["Rabbit"], ["Bear"], ["Wolf"], ["Dolphin"], ["Whale"], ["Shark"], ["Giraffe"], ["Zebra"], ["Penguin"], ["Panda"]],
+        Movies: [["Star Wars"], ["The Godfather"], ["Titanic"], ["Jaws"], ["Avatar"], ["Jurassic Park"], ["The Matrix"], ["Monsters inc"], ["Toy Story"], ["Batman"], ["Interstellar"], ["Frozen"], ["Shrek"], ["The Lion King"], ["Back to the Future"], ["The Avengers"], ["Zootopia"]],
+        Tech: [["iPhone"], ["Laptop"], ["PlayStation"], ["Smartwatch"], ["Drone"], ["Headphones"], ["Camera"], ["Tablet"], ["Router"], ["Microphone"], ["Robot Vacuum"], ["Monitor"], ["VR"], ["Speaker"], ["Electric Car"], ["Keyboard"]],
+        PopCulture: [["Barbie"], ["Music"], ["News"], ["Marvel"], ["TikTok"], ["Netflix"], ["Memes"], ["Emoji"], ["K-Pop"], ["Grammys"], ["Oscars"], ["Cosplay"], ["Anime"], ["Sneakers"], ["Dance"], ["Podcast"], ["Comic books"], ["Influencer"], ["Minecraft"], ["Fortnite"]]
+    };
+
+    let state = { roles: [], currentIndex: 0, imposterName: "" };
+
+    function syncNameInputs() {
+        const count = Math.max(3, parseInt(document.getElementById('player-count').value) || 3);
+        const container = document.getElementById('name-inputs-container');
+        const saved = JSON.parse(localStorage.getItem('imp-names')) || [];
+        
+        container.innerHTML = "";
+        for (let i = 0; i < count; i++) {
+            const input = document.createElement('input');
+            input.type = "text";
+            input.placeholder = `Player ${i + 1}`;
+            input.className = "name-input-field";
+            input.value = saved[i] || "";
+            input.oninput = () => {
+                const names = Array.from(document.querySelectorAll('.name-input-field')).map(el => el.value);
+                localStorage.setItem('imp-names', JSON.stringify(names));
+            };
+            container.appendChild(input);
+        }
+    }
+
+    function toggleNames() { document.getElementById('name-section').classList.toggle('hidden'); }
+
+    function startGame() {
+        const nameInputs = document.querySelectorAll('.name-input-field');
+        const names = Array.from(nameInputs).map((input, i) => input.value.trim() || `Player ${i + 1}`);
+
+        let tKey = document.getElementById('topic-select').value;
+        if (tKey === "Random") {
+            const keys = Object.keys(topics);
+            tKey = keys[Math.floor(Math.random() * keys.length)];
+        }
+        
+        const categoryWords = topics[tKey];
+        const secretWord = categoryWords[Math.floor(Math.random() * categoryWords.length)];
+        const impIdx = Math.floor(Math.random() * names.length);
+        
+        state.roles = names.map((name, i) => ({
+            name,
+            word: i === impIdx ? "YOU ARE THE IMPOSTER" : secretWord,
+            isImposter: i === impIdx
+        }));
+        state.imposterName = names[impIdx];
+        state.currentIndex = 0;
+        
+        showScreen('reveal');
+        updateRevealUI();
+    }
+
+    const holdBtn = document.getElementById('hold-btn');
+    const wordOut = document.getElementById('word-output');
+
+    const show = (e) => { e.preventDefault(); wordOut.innerText = state.roles[state.currentIndex].word; };
+    const hide = () => { wordOut.innerText = "•••••"; };
+
+    holdBtn.addEventListener('mousedown', show);
+    holdBtn.addEventListener('touchstart', show);
+    holdBtn.addEventListener('mouseup', hide);
+    holdBtn.addEventListener('touchend', hide);
+
+    function nextTurn() {
+        state.currentIndex++;
+        if (state.currentIndex >= state.roles.length) {
+            showScreen('voting');
+            renderVoteList();
+        } else {
+            updateRevealUI();
+            
+            // Bounce Animation Trigger
+            const content = document.getElementById('reveal-content');
+            content.classList.remove('animate-bounce');
+            void content.offsetWidth; // Force Reflow
+            content.classList.add('animate-bounce');
+        }
+    }
+
+    function updateRevealUI() {
+        document.getElementById('player-title').innerText = state.roles[state.currentIndex].name;
+        wordOut.innerText = "•••••";
+    }
+
+    function renderVoteList() {
+        const list = document.getElementById('vote-list');
+        list.innerHTML = state.roles.map(p => `<div class="vote-item" onclick="revealImposter('${p.name.replace(/'/g, "\\'")}', this)">${p.name}</div>`).join('');
+    }
+
+    function revealImposter(selectedName, element) {
+        const resultText = document.getElementById('result-text');
+        const isCorrect = selectedName === state.imposterName;
+        
+        document.querySelectorAll('.vote-item').forEach(item => {
+            item.style.pointerEvents = 'none';
+            if (item.innerText === state.imposterName) item.style.background = "#22c55e"; 
+        });
+
+        if (isCorrect) {
+            resultText.innerHTML = `<span style="color:#22c55e">FOUND HIM!</span><br>The Imposter was ${state.imposterName}.`;
+        } else {
+            element.style.background = "var(--danger)";
+            resultText.innerHTML = `<span style="color:var(--danger)">ESCAPE!</span><br>The real Imposter was ${state.imposterName}.`;
+        }
+    }
+
+    function showScreen(id) {
+        ['setup', 'reveal', 'voting'].forEach(s => document.getElementById(s).classList.add('hidden'));
+        document.getElementById(id).classList.remove('hidden');
+    }
+
+    syncNameInputs();
+</script>
+</body>
+</html>
