@@ -9,49 +9,49 @@
   {
     "id": "basket-random",
     "title": "Basket Random",
-    "category": "Sports",
+    "category": "2 Player",
     "thumbnail": "https://basketrandom.com/upload/imgs/options/basket-random.jpeg",
     "url": "https://jamestore214.github.io/g26/class-436"
   },
   {
     "id": "imposter-party",
     "title": "Imposter Game",
-    "category": "Party",
+    "category": "2 Player",
     "thumbnail": "https://play-lh.googleusercontent.com/PGYKDR8O6cdHEXEcinfhqlT8H0n5mYD3ZJVIuuNRlzZ9pteVS-bPBGSfb_e1WY2j4sM",
     "url": "./games/imposter/index.html"
   },
   {
     "id": "moto-x3m",
     "title": "Moto X3m",
-    "category": "Racing",
+    "category": "Skill",
     "thumbnail": "https://cdn.jsdelivr.net/gh/mathlesson/mathlesson.github.io/motox3m.webp",
     "url": "https://classroomlesson.github.io/basic-ruffle-player/html/motox3m/index.html"
   },
   {
     "id": "blackjack",
     "title": "Blackjack",
-    "category": "Card",
+    "category": "Strategy",
     "thumbnail": "https://cdn.aptoide.com/imgs/c/6/3/c63b20c69b1da55b4963681828df68f2_icon.png",
     "url": "https://ams.cdn.arkadiumhosted.com/assets/global/game/blackjack-pixijs/"
   },
   {
     "id": "retro-bowl",
     "title": "Retro Bowl",
-    "category": "Sports",
+    "category": "Strategy",
     "thumbnail": "https://play-lh.googleusercontent.com/WRM5Y1xZmzcCP1YtO5zl6G2g7CU5c5ZfjX4UVrgi1bpNgkfy-wuB-bQx3kkeRfaGYQ",
     "url": "https://freegamesunblocked76.github.io/retro-bowl/"
   },
   {
     "id": "tug-of-war",
     "title": "Tug of War",
-    "category": "Action",
+    "category": "2 Player",
     "thumbnail": "https://i.ibb.co/b5rdDL3f/Screenshot-2026-03-03-202232.png",
     "url": "./games/tug-of-war/index.html"
   },
   {
     "id": "connect-4",
     "title": "Connect 4",
-    "category": "Puzzle",
+    "category": "2 Player",
     "thumbnail": "https://jpg.hoodamath.com/large/connect4_300x225.jpg",
     "url": "https://files.twoplayergames.org/files/games/mobile/o1/Connect_4/index.html"
   },

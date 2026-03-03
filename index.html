@@ -37,6 +37,21 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Trending Section -->
+        <section id="trending-section" class="mb-12">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-emerald-500/10 rounded-xl flex items-center justify-center border border-emerald-500/20">
+                        <i data-lucide="trending-up" class="text-emerald-500 w-5 h-5"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold tracking-tight">Trending <span class="text-emerald-500">Now</span></h2>
+                </div>
+            </div>
+            <div id="trending-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Trending games will be injected here -->
+            </div>
+        </section>
+
         <!-- Categories -->
         <div id="categories-container" class="flex items-center gap-2 mb-8 overflow-x-auto pb-2 no-scrollbar">
             <!-- Categories will be injected here -->
@@ -81,8 +96,24 @@
             </div>
 
             <!-- Game Frame -->
-            <div class="flex-1 bg-black relative">
-                <iframe id="game-iframe" src="" class="w-full h-full border-none" allow="autoplay; fullscreen; keyboard"></iframe>
+            <div class="flex-1 bg-black relative flex items-center justify-center">
+                <iframe 
+                    id="game-iframe" 
+                    src="" 
+                    class="w-full h-full border-none shadow-2xl" 
+                    style="aspect-ratio: 16/9; pointer-events: auto;" 
+                    marginwidth="0" 
+                    marginheight="0" 
+                    hspace="0" 
+                    vspace="0" 
+                    frameborder="0" 
+                    scrolling="no" 
+                    webkitallowfullscreen="true" 
+                    mozallowfullscreen="true" 
+                    msallowfullscreen="true" 
+                    allowfullscreen="true"
+                    allow="autoplay; fullscreen; keyboard"
+                ></iframe>
             </div>
 
             <!-- Modal Footer -->
