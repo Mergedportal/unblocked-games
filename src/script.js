@@ -27,7 +27,7 @@ lucide.createIcons();
 // Fetch Games Data
 async function init() {
     try {
-        const response = await fetch('./src/games.json');
+        const response = await fetch('./games.json');
         games = await response.json();
         renderCategories();
         renderGames();

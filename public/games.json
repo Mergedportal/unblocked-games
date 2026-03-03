@@ -40,6 +40,34 @@
     "category": "Sports",
     "thumbnail": "https://play-lh.googleusercontent.com/WRM5Y1xZmzcCP1YtO5zl6G2g7CU5c5ZfjX4UVrgi1bpNgkfy-wuB-bQx3kkeRfaGYQ",
     "url": "https://freegamesunblocked76.github.io/retro-bowl/"
+  },
+  {
+    "id": "tug-of-war",
+    "title": "Tug of War",
+    "category": "Action",
+    "thumbnail": "https://i.ibb.co/b5rdDL3f/Screenshot-2026-03-03-202232.png",
+    "url": "./games/tug-of-war/index.html"
+  },
+  {
+    "id": "connect-4",
+    "title": "Connect 4",
+    "category": "Puzzle",
+    "thumbnail": "https://jpg.hoodamath.com/large/connect4_300x225.jpg",
+    "url": "https://files.twoplayergames.org/files/games/mobile/o1/Connect_4/index.html"
+  },
+  {
+    "id": "granny",
+    "title": "Granny",
+    "category": "Horror",
+    "thumbnail": "https://play-lh.googleusercontent.com/yT_LBq_tyKeIDohKDsqN_Qt18jGIPUYIxY2C-1-E2YA9Qd60uZW08pua17qBmIiDPA",
+    "url": "https://classroomlesson.github.io/basic-ruffle-player/html/granny/index.html"
+  },
+  {
+    "id": "pop-lock",
+    "title": "Pop the Lock",
+    "category": "Arcade",
+    "thumbnail": "https://i.ibb.co/ymFsC5XD/popthelock.png",
+    "url": "./games/pop-lock/index.html"
   }
 ]
 
