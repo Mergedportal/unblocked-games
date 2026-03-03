@@ -3,8 +3,6 @@ let activeCategory = 'All';
 let searchQuery = '';
 
 const gamesGrid = document.getElementById('games-grid');
-const trendingGrid = document.getElementById('trending-grid');
-const trendingSection = document.getElementById('trending-section');
 const categoriesContainer = document.getElementById('categories-container');
 const searchInput = document.getElementById('search-input');
 const noResults = document.getElementById('no-results');
@@ -32,48 +30,10 @@ async function init() {
         const response = await fetch('./games.json');
         games = await response.json();
         renderCategories();
-        renderTrendingGames();
         renderGames();
     } catch (error) {
         console.error('Error loading games:', error);
     }
-}
-
-function renderTrendingGames() {
-    // Pick 3 games as trending (e.g., first 3)
-    const trending = games.slice(0, 3);
-    
-    trendingGrid.innerHTML = trending.map(game => `
-        <div
-            class="group relative bg-zinc-900 rounded-3xl overflow-hidden border border-white/5 cursor-pointer transition-all hover:border-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/10"
-            onclick="openGame('${game.id}')"
-        >
-            <div class="aspect-video relative overflow-hidden">
-                <img 
-                    src="${game.thumbnail}" 
-                    alt="${game.title}" 
-                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    referrerpolicy="no-referrer"
-                >
-                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-60"></div>
-                
-                <div class="absolute top-4 left-4">
-                    <span class="bg-emerald-500 text-black text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter shadow-lg">
-                        Trending
-                    </span>
-                </div>
-
-                <div class="absolute bottom-0 left-0 right-0 p-6">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="text-[10px] text-emerald-400 font-bold uppercase tracking-widest bg-emerald-400/10 px-2 py-0.5 rounded border border-emerald-400/20">
-                            ${game.category}
-                        </span>
-                    </div>
-                    <h3 class="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors line-clamp-1">${game.title}</h3>
-                </div>
-            </div>
-        </div>
-    `).join('');
 }
 
 function renderCategories() {
@@ -93,14 +53,6 @@ function renderCategories() {
 }
 
 function renderGames() {
-    const isFiltering = searchQuery !== '' || activeCategory !== 'All';
-    
-    if (isFiltering) {
-        trendingSection.classList.add('hidden');
-    } else {
-        trendingSection.classList.remove('hidden');
-    }
-
     const filtered = games.filter(game => {
         const matchesSearch = game.title.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesCategory = activeCategory === 'All' || game.category === activeCategory;
