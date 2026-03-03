@@ -15,8 +15,13 @@ const modalCategory = document.getElementById('modal-category');
 const modalFullscreen = document.getElementById('modal-fullscreen');
 const playerCount = document.getElementById('player-count');
 const logo = document.getElementById('logo');
+const likeBtn = document.getElementById('like-btn');
+const dislikeBtn = document.getElementById('dislike-btn');
+const likeCount = document.getElementById('like-count');
+const dislikeCount = document.getElementById('dislike-count');
 
-// Initialize Lucide Icons
+// Ratings state
+let ratings = JSON.parse(localStorage.getItem('nexus_ratings') || '{}');
 lucide.createIcons();
 
 // Fetch Games Data
@@ -109,10 +114,55 @@ window.openGame = (id) => {
     gameIframe.src = game.url;
     playerCount.innerText = Math.floor(Math.random() * 2000 + 500).toLocaleString();
     
+    // Update ratings UI
+    updateRatingsUI(id);
+    
     gameModal.classList.remove('hidden');
     gameModal.classList.add('flex');
     document.body.style.overflow = 'hidden';
 };
+
+function updateRatingsUI(id) {
+    const gameRatings = ratings[id] || { likes: 0, dislikes: 0, userRating: null };
+    likeCount.innerText = gameRatings.likes;
+    dislikeCount.innerText = gameRatings.dislikes;
+    
+    // Reset classes
+    likeBtn.classList.remove('bg-emerald-500/20', 'text-emerald-500', 'border-emerald-500/30');
+    dislikeBtn.classList.remove('bg-red-500/20', 'text-red-500', 'border-red-500/30');
+    
+    if (gameRatings.userRating === 'like') {
+        likeBtn.classList.add('bg-emerald-500/20', 'text-emerald-500', 'border-emerald-500/30');
+    } else if (gameRatings.userRating === 'dislike') {
+        dislikeBtn.classList.add('bg-red-500/20', 'text-red-500', 'border-red-500/30');
+    }
+}
+
+function handleRating(id, type) {
+    if (!ratings[id]) {
+        ratings[id] = { likes: 0, dislikes: 0, userRating: null };
+    }
+    
+    const gameRatings = ratings[id];
+    
+    if (gameRatings.userRating === type) {
+        // Toggle off
+        gameRatings.userRating = null;
+        if (type === 'like') gameRatings.likes--;
+        else gameRatings.dislikes--;
+    } else {
+        // Switch or set
+        if (gameRatings.userRating === 'like') gameRatings.likes--;
+        if (gameRatings.userRating === 'dislike') gameRatings.dislikes--;
+        
+        gameRatings.userRating = type;
+        if (type === 'like') gameRatings.likes++;
+        else gameRatings.dislikes++;
+    }
+    
+    localStorage.setItem('nexus_ratings', JSON.stringify(ratings));
+    updateRatingsUI(id);
+}
 
 function closeGameModal() {
     gameModal.classList.add('hidden');
@@ -128,6 +178,16 @@ searchInput.addEventListener('input', (e) => {
 });
 
 closeModal.addEventListener('click', closeGameModal);
+
+likeBtn.addEventListener('click', () => {
+    const activeGame = games.find(g => g.url === gameIframe.src);
+    if (activeGame) handleRating(activeGame.id, 'like');
+});
+
+dislikeBtn.addEventListener('click', () => {
+    const activeGame = games.find(g => g.url === gameIframe.src);
+    if (activeGame) handleRating(activeGame.id, 'dislike');
+});
 
 logo.addEventListener('click', () => {
     activeCategory = 'All';

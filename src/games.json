@@ -3,8 +3,15 @@
     "id": "blocky-puzzle",
     "title": "Blocky Puzzle",
     "category": "Puzzle",
-    "thumbnail": "https://picsum.photos/seed/blocky/400/300",
+    "thumbnail": "https://cdn.jsdelivr.net/gh/mathlesson/mathlesson.github.io/img/blocky-puzzle.jpg",
     "url": "https://classroomlesson.github.io/basic-ruffle-player/html/blocky_puzzle/index.html"
+  },
+  {
+    "id": "basket-random",
+    "title": "Basket Random",
+    "category": "Sports",
+    "thumbnail": "https://basketrandom.com/upload/imgs/options/basket-random.jpeg",
+    "url": "https://jamestore214.github.io/g26/class-436"
   }
 ]
 
