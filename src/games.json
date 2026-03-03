@@ -1,0 +1,58 @@
+[
+  {
+    "id": "2048",
+    "title": "2048",
+    "category": "Puzzle",
+    "thumbnail": "https://picsum.photos/seed/2048/400/300",
+    "url": "https://play2048.co/"
+  },
+  {
+    "id": "hextris",
+    "title": "Hextris",
+    "category": "Arcade",
+    "thumbnail": "https://picsum.photos/seed/hextris/400/300",
+    "url": "https://hextris.io/"
+  },
+  {
+    "id": "paper-io",
+    "title": "Paper.io 2",
+    "category": "IO Games",
+    "thumbnail": "https://picsum.photos/seed/paperio/400/300",
+    "url": "https://paper-io.com/"
+  },
+  {
+    "id": "slope",
+    "title": "Slope",
+    "category": "Action",
+    "thumbnail": "https://picsum.photos/seed/slope/400/300",
+    "url": "https://slopegame.online/"
+  },
+  {
+    "id": "tetris",
+    "title": "Tetris",
+    "category": "Puzzle",
+    "thumbnail": "https://picsum.photos/seed/tetris/400/300",
+    "url": "https://tetris.com/play-tetris"
+  },
+  {
+    "id": "cookie-clicker",
+    "title": "Cookie Clicker",
+    "category": "Idle",
+    "thumbnail": "https://picsum.photos/seed/cookie/400/300",
+    "url": "https://orteil.dashnet.org/cookieclicker/"
+  },
+  {
+    "id": "crossy-road",
+    "title": "Crossy Road",
+    "category": "Arcade",
+    "thumbnail": "https://picsum.photos/seed/crossy/400/300",
+    "url": "https://www.poki.com/en/g/crossy-road"
+  },
+  {
+    "id": "shell-shockers",
+    "title": "Shell Shockers",
+    "category": "FPS",
+    "thumbnail": "https://picsum.photos/seed/shell/400/300",
+    "url": "https://shellshock.io/"
+  }
+]
